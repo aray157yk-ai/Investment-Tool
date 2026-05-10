@@ -51,6 +51,7 @@ const toTVSymbol = (sym) => {
 
 function TradingViewChart({ symbol }) {
   const containerRef = useRef(null)
+  const height = Math.max(window.innerHeight - 280, 600)
 
   useEffect(() => {
     if (!containerRef.current || !symbol) return
@@ -61,7 +62,9 @@ function TradingViewChart({ symbol }) {
     script.type = 'text/javascript'
     script.async = true
     script.innerHTML = JSON.stringify({
-      autosize: true,
+      autosize: false,
+      width: '100%',
+      height: Math.max(window.innerHeight - 280, 600),
       symbol: toTVSymbol(symbol),
       interval: 'D',
       timezone: 'Asia/Taipei',
@@ -79,7 +82,7 @@ function TradingViewChart({ symbol }) {
 
     const widget = document.createElement('div')
     widget.className = 'tradingview-widget-container__widget'
-    widget.style.height = 'calc(100% - 32px)'
+    widget.style.height = height + 'px'
     widget.style.width = '100%'
 
     containerRef.current.appendChild(widget)
@@ -94,7 +97,7 @@ function TradingViewChart({ symbol }) {
     <div
       ref={containerRef}
       className="tradingview-widget-container"
-      style={{ height: 'calc(100vh - 220px)', minHeight: '650px', width: '100%', display: 'flex', flexDirection: 'column' }}
+      style={{ height: height + 'px', width: '100%' }}
     />
   )
 }
