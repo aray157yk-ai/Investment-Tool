@@ -6,7 +6,7 @@ import { Plus, X, Trash2, RefreshCw, ExternalLink, BarChart2, ChevronLeft } from
 
 const pct = (n) => (n === undefined || n === null) ? '—' : (n >= 0 ? '+' : '') + parseFloat(n).toFixed(2) + '%'
 const pctColor = (n) => (n === undefined || n === null) ? 'text-gray-500' : n >= 0 ? 'text-green-400' : 'text-red-400'
-const API = 'http://localhost:8000'
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 // ── TradingView 圖表嵌入（iframe 穩定版）───────────────
 const TV_SYMBOL_MAP = {

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { RefreshCw, Minus, TrendingUp, Square, Trash2, MousePointer } from 'lucide-react'
 
-const API = 'http://localhost:8000'
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 const INTERVALS = [
   { label: '日', value: 'D' },

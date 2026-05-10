@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { ChevronLeft, ChevronRight, X, RefreshCw } from 'lucide-react'
 
-const API = 'http://localhost:8000'
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const fmt = (n) => new Intl.NumberFormat('zh-TW').format(Math.round(n || 0))
 
 const ECONOMIC_EVENTS = {

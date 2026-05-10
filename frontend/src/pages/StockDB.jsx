@@ -10,7 +10,7 @@ const delayTag = (source) => {
   if (source === 'yfinance_delayed') return <span className="text-xs bg-amber-900/50 text-amber-400 px-1.5 py-0.5 rounded">延遲15分</span>
   return <span className="text-xs bg-green-900/50 text-green-400 px-1.5 py-0.5 rounded">即時</span>
 }
-const API = 'http://localhost:8000'
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 export default function StockDB() {
   const [holdings, setHoldings] = useState([])
