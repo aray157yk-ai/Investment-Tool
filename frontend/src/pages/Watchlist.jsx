@@ -94,7 +94,7 @@ function TradingViewChart({ symbol }) {
     <div
       ref={containerRef}
       className="tradingview-widget-container"
-      style={{ height: '600px', width: '100%' }}
+      style={{ height: 'calc(100vh - 220px)', minHeight: '650px', width: '100%' }}
     />
   )
 }
