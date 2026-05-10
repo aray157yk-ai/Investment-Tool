@@ -50,57 +50,21 @@ const toTVSymbol = (sym) => {
 }
 
 function TradingViewChart({ symbol }) {
-  const containerRef = useRef(null)
-  const height = Math.max(window.innerHeight - 280, 600)
-
-  useEffect(() => {
-    if (!containerRef.current || !symbol) return
-    containerRef.current.innerHTML = ''
-
-    const script = document.createElement('script')
-    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js'
-    script.type = 'text/javascript'
-    script.async = true
-    script.innerHTML = JSON.stringify({
-      autosize: false,
-      width: '100%',
-      height: Math.max(window.innerHeight - 280, 600),
-      symbol: toTVSymbol(symbol),
-      interval: 'D',
-      timezone: 'Asia/Taipei',
-      theme: 'dark',
-      style: '1',
-      locale: 'zh_TW',
-      withdateranges: true,
-      hide_side_toolbar: false,
-      allow_symbol_change: false,
-      save_image: true,
-      calendar: false,
-      hide_volume: false,
-      support_host: 'https://www.tradingview.com',
-    })
-
-    const widget = document.createElement('div')
-    widget.className = 'tradingview-widget-container__widget'
-    widget.style.height = height + 'px'
-    widget.style.width = '100%'
-
-    containerRef.current.appendChild(widget)
-    containerRef.current.appendChild(script)
-
-    return () => {
-      if (containerRef.current) containerRef.current.innerHTML = ''
-    }
-  }, [symbol])
+  if (!symbol) return null
+  const tvSym = encodeURIComponent(toTVSymbol(symbol))
+  const src = `https://s.tradingview.com/widgetembed/?symbol=${tvSym}&interval=D&theme=dark&style=1&locale=zh_TW&withdateranges=1&hide_side_toolbar=0&allow_symbol_change=0&save_image=1&studies=STD%3BMACD%7CSTD%3BRSI%7CSTD%3BVolume`
 
   return (
-    <div
-      ref={containerRef}
-      className="tradingview-widget-container"
-      style={{ height: height + 'px', width: '100%' }}
+    <iframe
+      key={symbol}
+      src={src}
+      style={{ width: '100%', height: 'calc(100vh - 220px)', minHeight: '650px', border: 'none', display: 'block' }}
+      allowFullScreen
+      title={`TradingView - ${symbol}`}
     />
   )
 }
+
 
 // ── 籌碼分析（近一個月三大法人）──────────────────────
 function ChipAnalysis({ symbol }) {
