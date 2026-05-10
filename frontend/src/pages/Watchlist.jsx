@@ -94,7 +94,7 @@ function TradingViewChart({ symbol }) {
     <div
       ref={containerRef}
       className="tradingview-widget-container"
-      style={{ height: 'calc(100vh - 260px)', minHeight: '620px', width: '100%' }}
+      style={{ height: '600px', width: '100%' }}
     />
   )
 }
@@ -324,6 +324,7 @@ export default function Watchlist() {
   // ── 圖表展開頁面 ────────────────────────────────────
   if (selectedStock) {
     const p = prices[selectedStock.symbol]
+    const isLoadingPrice = priceLoading && !p
     return (
       <div className="p-6 space-y-4">
         {/* 返回按鈕 */}
@@ -338,15 +339,22 @@ export default function Watchlist() {
             <span className="text-white font-semibold text-lg">{selectedStock.symbol}</span>
             {selectedStock.name && <span className="text-gray-400 ml-2">{selectedStock.name}</span>}
           </div>
-          {p?.price && (
-            <div className="ml-auto flex items-center gap-3">
-              {delayTag(p.source)}
-              <span className="text-white text-xl font-bold">{p.price.toFixed(2)}</span>
-              <span className={`text-sm font-medium ${p.daily_change >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                {pct(p.daily_change)}
-              </span>
-            </div>
-          )}
+          <div className="ml-auto flex items-center gap-3">
+            {isLoadingPrice ? (
+              <div className="flex items-center gap-2">
+                <div className="h-5 w-20 bg-gray-800 rounded animate-pulse" />
+                <div className="h-5 w-16 bg-gray-800 rounded animate-pulse" />
+              </div>
+            ) : p?.price ? (
+              <>
+                {delayTag(p.source)}
+                <span className="text-white text-xl font-bold">{p.price.toFixed(2)}</span>
+                <span className={`text-sm font-medium ${p.daily_change >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                  {pct(p.daily_change)}
+                </span>
+              </>
+            ) : null}
+          </div>
         </div>
 
         {/* 圖表：台股用 TaiwanChart，美股用 TradingView */}
@@ -379,21 +387,25 @@ export default function Watchlist() {
         )}
 
         {/* 多週期漲跌 */}
-        {p && !p.error && (
-          <div className="grid grid-cols-4 gap-3">
-            {[
-              { label: '日漲跌', value: p.daily_change },
-              { label: '週漲跌', value: p.weekly_change },
-              { label: '月漲跌', value: p.monthly_change },
-              { label: '今年漲跌', value: p.ytd_change },
-            ].map(({ label, value }) => (
-              <div key={label} className="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
-                <div className="text-xs text-gray-500 mb-1">{label}</div>
-                <div className={`text-lg font-bold ${pctColor(value)}`}>{pct(value)}</div>
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-4 gap-3">
+          {[
+            { label: '日漲跌', key: 'daily_change' },
+            { label: '週漲跌', key: 'weekly_change' },
+            { label: '月漲跌', key: 'monthly_change' },
+            { label: '今年漲跌', key: 'ytd_change' },
+          ].map(({ label, key }) => (
+            <div key={label} className="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
+              <div className="text-xs text-gray-500 mb-1">{label}</div>
+              {isLoadingPrice ? (
+                <div className="h-6 bg-gray-800 rounded animate-pulse mx-2" />
+              ) : p && !p.error ? (
+                <div className={`text-lg font-bold ${pctColor(p[key])}`}>{pct(p[key])}</div>
+              ) : (
+                <div className="text-gray-600 text-sm">—</div>
+              )}
+            </div>
+          ))}
+        </div>
 
         {/* 籌碼分析 */}
         <ChipAnalysis symbol={selectedStock.symbol} />
