@@ -79,7 +79,7 @@ function TradingViewChart({ symbol }) {
 
     const widget = document.createElement('div')
     widget.className = 'tradingview-widget-container__widget'
-    widget.style.height = '100%'
+    widget.style.height = 'calc(100% - 32px)'
     widget.style.width = '100%'
 
     containerRef.current.appendChild(widget)
@@ -94,7 +94,7 @@ function TradingViewChart({ symbol }) {
     <div
       ref={containerRef}
       className="tradingview-widget-container"
-      style={{ height: 'calc(100vh - 220px)', minHeight: '650px', width: '100%' }}
+      style={{ height: 'calc(100vh - 220px)', minHeight: '650px', width: '100%', display: 'flex', flexDirection: 'column' }}
     />
   )
 }
