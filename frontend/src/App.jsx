@@ -6,6 +6,7 @@ import Layout from './components/Layout'
 import Dashboard from './pages/Dashboard'
 import StockDB from './pages/StockDB'
 import Watchlist from './pages/Watchlist'
+import IndustryMap from './pages/IndustryMap'
 import Records from './pages/Records'
 import CalendarPage from './pages/CalendarPage'
 import Accounts from './pages/Accounts'
@@ -48,6 +49,7 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/stocks" element={<StockDB />} />
             <Route path="/watchlist" element={<Watchlist />} />
+            <Route path="/industry" element={<IndustryMap />} />
             <Route path="/records" element={<Records />} />
             <Route path="/calendar" element={<CalendarPage />} />
             <Route path="/accounts" element={<Accounts />} />

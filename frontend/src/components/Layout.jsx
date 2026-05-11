@@ -2,16 +2,17 @@ import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import {
   LayoutDashboard, Database, Eye, FileText,
-  Calendar, Wallet, TrendingUp, LogOut
+  Calendar, Wallet, TrendingUp, LogOut, Map
 } from 'lucide-react'
 
 const navItems = [
-  { to: '/',          icon: LayoutDashboard, label: '資產配置' },
-  { to: '/stocks',    icon: Database,         label: '股票資料庫' },
-  { to: '/watchlist', icon: Eye,              label: '觀察清單' },
-  { to: '/records',   icon: FileText,         label: '紀錄' },
-  { to: '/calendar',  icon: Calendar,         label: '日曆' },
-  { to: '/accounts',  icon: Wallet,           label: '帳戶' },
+  { to: '/',            icon: LayoutDashboard, label: '資產配置' },
+  { to: '/stocks',      icon: Database,         label: '股票資料庫' },
+  { to: '/watchlist',   icon: Eye,              label: '觀察清單' },
+  { to: '/industry',    icon: Map,              label: '產業地圖' },
+  { to: '/records',     icon: FileText,         label: '紀錄' },
+  { to: '/calendar',    icon: Calendar,         label: '日曆' },
+  { to: '/accounts',    icon: Wallet,           label: '帳戶' },
 ]
 
 export default function Layout({ session }) {
